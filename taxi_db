@@ -1,0 +1,727 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.3
+-- Dumped by pg_dump version 12.3
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: taxi; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE taxi WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'Russian_Russia.1251' LC_CTYPE = 'Russian_Russia.1251';
+
+
+ALTER DATABASE taxi OWNER TO postgres;
+
+\connect taxi
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: function; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.function (
+    id integer NOT NULL,
+    systemname character(20),
+    name character(20)
+);
+
+
+ALTER TABLE public.function OWNER TO postgres;
+
+--
+-- Name: mark; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.mark (
+    id integer NOT NULL,
+    name character(20)
+);
+
+
+ALTER TABLE public.mark OWNER TO postgres;
+
+--
+-- Name: orders; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.orders (
+    idclient integer NOT NULL,
+    id integer NOT NULL,
+    date date,
+    state character(20),
+    startaddress character(20),
+    endaddress character(20),
+    idtransport integer,
+    idoperator integer,
+    price integer
+);
+
+
+ALTER TABLE public.orders OWNER TO postgres;
+
+--
+-- Name: phototransport; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.phototransport (
+    id integer NOT NULL,
+    photo character(1)
+);
+
+
+ALTER TABLE public.phototransport OWNER TO postgres;
+
+--
+-- Name: rf; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.rf (
+    id integer NOT NULL,
+    idfunction integer NOT NULL,
+    idroles integer NOT NULL
+);
+
+
+ALTER TABLE public.rf OWNER TO postgres;
+
+--
+-- Name: roles; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.roles (
+    id integer NOT NULL,
+    name character(20),
+    systemname character(20)
+);
+
+
+ALTER TABLE public.roles OWNER TO postgres;
+
+--
+-- Name: s1; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.s1
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.s1 OWNER TO postgres;
+
+--
+-- Name: s2; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.s2
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.s2 OWNER TO postgres;
+
+--
+-- Name: s3; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.s3
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.s3 OWNER TO postgres;
+
+--
+-- Name: statustransport; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.statustransport (
+    id integer NOT NULL,
+    name character(20)
+);
+
+
+ALTER TABLE public.statustransport OWNER TO postgres;
+
+--
+-- Name: transport; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.transport (
+    id integer NOT NULL,
+    model character(20),
+    datecreate date,
+    nunber character(20),
+    dateregistration date,
+    datewriteoff character(20),
+    idmark integer NOT NULL,
+    idphoto integer,
+    idstatus integer NOT NULL
+);
+
+
+ALTER TABLE public.transport OWNER TO postgres;
+
+--
+-- Name: ur; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.ur (
+    id integer NOT NULL,
+    idusers integer NOT NULL,
+    idroles integer NOT NULL
+);
+
+
+ALTER TABLE public.ur OWNER TO postgres;
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    id integer NOT NULL,
+    lastname character(200),
+    midname character(200),
+    sex character(1),
+    login character(200),
+    hash character(200),
+    firstname character varying,
+    datebirth date,
+    photo character(1),
+    number character varying(200)
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- Data for Name: function; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.function (id, systemname, name) FROM stdin;
+2	allprofile          	Все профили         
+1	profile             	Мой профиль         
+3	role                	Все роли            
+\.
+
+
+--
+-- Data for Name: mark; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.mark (id, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.orders (idclient, id, date, state, startaddress, endaddress, idtransport, idoperator, price) FROM stdin;
+\.
+
+
+--
+-- Data for Name: phototransport; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.phototransport (id, photo) FROM stdin;
+\.
+
+
+--
+-- Data for Name: rf; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.rf (id, idfunction, idroles) FROM stdin;
+1	1	1
+2	2	1
+3	3	2
+4	2	3
+\.
+
+
+--
+-- Data for Name: roles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.roles (id, name, systemname) FROM stdin;
+1	Заказчик            	Client              
+2	Администратор       	Admin               
+3	Оператор            	Operator            
+\.
+
+
+--
+-- Data for Name: statustransport; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.statustransport (id, name) FROM stdin;
+1	Активен             
+2	Исполняется         
+3	Выполнен            
+4	Отменён             
+\.
+
+
+--
+-- Data for Name: transport; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.transport (id, model, datecreate, nunber, dateregistration, datewriteoff, idmark, idphoto, idstatus) FROM stdin;
+\.
+
+
+--
+-- Data for Name: ur; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.ur (id, idusers, idroles) FROM stdin;
+17	12	1
+23	22	3
+24	13	2
+25	13	1
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users (id, lastname, midname, sex, login, hash, firstname, datebirth, photo, number) FROM stdin;
+11	b                                                                                                                                                                                                       	midname                                                                                                                                                                                                 	f	log                                                                                                                                                                                                     	!²OëWhÃ%þ0;9rq                                                                                                                                                                                    	a	1998-03-08	\N	1 123-456-7801
+12	t2                                                                                                                                                                                                      	t2                                                                                                                                                                                                      	f	l1                                                                                                                                                                                                      	!²OëWhÃ%þ0;9rq                                                                                                                                                                                    	t2	1998-03-08	\N	0 000-000-0000
+13	Фамилия2                                                                                                                                                                                                	Отчество2                                                                                                                                                                                               	f	l2                                                                                                                                                                                                      	!²OëWhÃ%þ0;9rq                                                                                                                                                                                    	Имя2	1998-03-08	\N	9 999-999-9999
+22	Матвеев                                                                                                                                                                                                 	Иванович                                                                                                                                                                                                	f	l3                                                                                                                                                                                                      	!²OëWhÃ%þ0;9rq                                                                                                                                                                                    	Никита	1998-03-08	\N	8 906-865-6367
+\.
+
+
+--
+-- Name: s1; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.s1', 26, true);
+
+
+--
+-- Name: s2; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.s2', 1, false);
+
+
+--
+-- Name: s3; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.s3', 1, false);
+
+
+--
+-- Name: function function_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.function
+    ADD CONSTRAINT function_pk PRIMARY KEY (id);
+
+
+--
+-- Name: function function_un; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.function
+    ADD CONSTRAINT function_un UNIQUE (systemname);
+
+
+--
+-- Name: mark mark_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.mark
+    ADD CONSTRAINT mark_pk PRIMARY KEY (id);
+
+
+--
+-- Name: orders orders_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_pk PRIMARY KEY (id);
+
+
+--
+-- Name: phototransport phototransport_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.phototransport
+    ADD CONSTRAINT phototransport_pk PRIMARY KEY (id);
+
+
+--
+-- Name: rf rf_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.rf
+    ADD CONSTRAINT rf_pk PRIMARY KEY (id);
+
+
+--
+-- Name: rf rf_un; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.rf
+    ADD CONSTRAINT rf_un UNIQUE (idfunction, idroles);
+
+
+--
+-- Name: roles roles_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.roles
+    ADD CONSTRAINT roles_pk PRIMARY KEY (id);
+
+
+--
+-- Name: roles roles_un; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.roles
+    ADD CONSTRAINT roles_un UNIQUE (systemname);
+
+
+--
+-- Name: statustransport statustransport_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.statustransport
+    ADD CONSTRAINT statustransport_pk PRIMARY KEY (id);
+
+
+--
+-- Name: transport transport_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.transport
+    ADD CONSTRAINT transport_pk PRIMARY KEY (id);
+
+
+--
+-- Name: ur ur_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ur
+    ADD CONSTRAINT ur_pk PRIMARY KEY (id);
+
+
+--
+-- Name: ur ur_un; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ur
+    ADD CONSTRAINT ur_un UNIQUE (idusers, idroles);
+
+
+--
+-- Name: users users_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pk PRIMARY KEY (id);
+
+
+--
+-- Name: users users_un; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_un UNIQUE (login);
+
+
+--
+-- Name: xak1function; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX xak1function ON public.function USING btree (systemname);
+
+
+--
+-- Name: xak1roles; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX xak1roles ON public.roles USING btree (systemname);
+
+
+--
+-- Name: xak1users; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX xak1users ON public.users USING btree (login);
+
+
+--
+-- Name: xif1orders; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX xif1orders ON public.orders USING btree (idclient);
+
+
+--
+-- Name: xif1rf; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX xif1rf ON public.rf USING btree (idfunction);
+
+
+--
+-- Name: xif1transport; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX xif1transport ON public.transport USING btree (idmark);
+
+
+--
+-- Name: xif1ur; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX xif1ur ON public.ur USING btree (idusers);
+
+
+--
+-- Name: xif2orders; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX xif2orders ON public.orders USING btree (idtransport);
+
+
+--
+-- Name: xif2rf; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX xif2rf ON public.rf USING btree (idroles);
+
+
+--
+-- Name: xif2transport; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX xif2transport ON public.transport USING btree (idphoto);
+
+
+--
+-- Name: xif2ur; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX xif2ur ON public.ur USING btree (idroles);
+
+
+--
+-- Name: xif3orders; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX xif3orders ON public.orders USING btree (idoperator);
+
+
+--
+-- Name: xif3transport; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX xif3transport ON public.transport USING btree (idstatus);
+
+
+--
+-- Name: xpkfunction; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX xpkfunction ON public.function USING btree (id);
+
+
+--
+-- Name: xpkmark; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX xpkmark ON public.mark USING btree (id);
+
+
+--
+-- Name: xpkorders; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX xpkorders ON public.orders USING btree (id);
+
+
+--
+-- Name: xpkphototransport; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX xpkphototransport ON public.phototransport USING btree (id);
+
+
+--
+-- Name: xpkrf; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX xpkrf ON public.rf USING btree (id);
+
+
+--
+-- Name: xpkroles; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX xpkroles ON public.roles USING btree (id);
+
+
+--
+-- Name: xpkstatustransport; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX xpkstatustransport ON public.statustransport USING btree (id);
+
+
+--
+-- Name: xpktransport; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX xpktransport ON public.transport USING btree (id);
+
+
+--
+-- Name: xpkur; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX xpkur ON public.ur USING btree (id);
+
+
+--
+-- Name: xpkusers; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX xpkusers ON public.users USING btree (id);
+
+
+--
+-- Name: orders orders_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_fk FOREIGN KEY (idclient) REFERENCES public.users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: orders orders_fk_2; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_fk_2 FOREIGN KEY (idtransport) REFERENCES public.transport(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: orders orders_fk_3; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_fk_3 FOREIGN KEY (idoperator) REFERENCES public.users(id);
+
+
+--
+-- Name: rf rf_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.rf
+    ADD CONSTRAINT rf_fk FOREIGN KEY (idroles) REFERENCES public.roles(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: rf rf_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.rf
+    ADD CONSTRAINT rf_fk_1 FOREIGN KEY (idfunction) REFERENCES public.function(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: transport transport_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.transport
+    ADD CONSTRAINT transport_fk FOREIGN KEY (idmark) REFERENCES public.mark(id) ON UPDATE RESTRICT ON DELETE CASCADE;
+
+
+--
+-- Name: transport transport_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.transport
+    ADD CONSTRAINT transport_fk_1 FOREIGN KEY (idphoto) REFERENCES public.phototransport(id);
+
+
+--
+-- Name: transport transport_fk_2; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.transport
+    ADD CONSTRAINT transport_fk_2 FOREIGN KEY (idstatus) REFERENCES public.statustransport(id);
+
+
+--
+-- Name: ur ur_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ur
+    ADD CONSTRAINT ur_fk FOREIGN KEY (idusers) REFERENCES public.users(id);
+
+
+--
+-- Name: ur ur_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ur
+    ADD CONSTRAINT ur_fk_1 FOREIGN KEY (idroles) REFERENCES public.roles(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
+--
+CREATE ROLE taxi_driver LOGIN password '1' SUPERUSER;
+GRANT ALL ON SCHEMA public TO taxi_driver;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
